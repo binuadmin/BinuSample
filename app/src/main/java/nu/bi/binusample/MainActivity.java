@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     // below is sample only, change this to real value.
     final static String mFirstPageUrl = "https://www.google.com/";
 
-    // use Deployment.SANDBOX for testing, or Deployment.PRODUCTION for live production app.
-    final static Deployment mDeployment = Deployment.SYSTEST_H2;
+    // use Deployment. SANDBOX for testing, or Deployment.PRODUCTION for live production app.
+    final static Deployment mDeployment = Deployment.SANDBOX;
 
     // default site for PlayerActivity
     private static final String mPlayerUrl = "http://us4.internet-radio.com:8266";

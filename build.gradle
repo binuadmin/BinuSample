@@ -29,4 +29,5 @@ task clean(type: Delete) {
 ext {
     supportLibVersion = '27.1.1'
     exoPlayerLibVersion = '2.8.2'
+    binuProxyVersion = '1.1.4'
 }
