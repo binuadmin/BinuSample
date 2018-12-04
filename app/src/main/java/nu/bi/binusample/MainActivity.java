@@ -31,13 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String mBinuAppId = "221";
 
     // below is sample only, change this to real value.
-    final static String mFirstPageUrl = "http://www.google.com/";
+    final static String mFirstPageUrl = "https://www.google.com/";
 
     // use Deployment.SANDBOX for testing, or Deployment.PRODUCTION for live production app.
-    final static Deployment mDeployment = Deployment.SANDBOX;
+    final static Deployment mDeployment = Deployment.SYSTEST_H2;
 
     // default site for PlayerActivity
     private static final String mPlayerUrl = "http://us4.internet-radio.com:8266";
+    private static final String mImageUrl = "http://d12t435tmqq7vw.cloudfront.net/wp-content/uploads/2017/04/biNu-logo-colour-112x56px.png";
 
     TextView mMainText;
     ImageView mMainImage;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(final Response response, final String body) {
                 super.onSuccess(response, body);
                 // do something with the response. The body is equivalent to response.body().
-                Toast.makeText(c, "Yay! got the first page", Toast.LENGTH_SHORT).show();
+                mMainText.setText(getString(R.string.binuProxy_version, BinuProxy.getVersion()));
 
                 // next line if you want page navigation to be reported in Binu reporting.
                 // call this method on all page navigation
@@ -123,21 +124,21 @@ public class MainActivity extends AppCompatActivity {
             public void onNetworkingProblem(RequestBody body, Throwable t) {
                 super.onNetworkingProblem(body, t);
                 // handle the network error
-                Toast.makeText(c, "network problem, failed to reach server :(", Toast.LENGTH_SHORT).show();
-                mMainText.setText("Network Error");
+                Toast.makeText(c, "Network problem, failed to reach server", Toast.LENGTH_SHORT).show();
+                mMainText.setText(getString(R.string.network_error, url));
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Response<ResponseBody> response) {
                 super.onFailure(call, response);
                 // response code not 200..299, handle request failure here
-                Toast.makeText(c, "server returned error ("+response.code()+")", Toast.LENGTH_SHORT).show();
-                mMainText.setText("Request Failed "+response.code());
+                Toast.makeText(c, "Server returned error ("+response.code()+")", Toast.LENGTH_SHORT).show();
+                mMainText.setText(getString(R.string.request_failure, response.code(), response.message()));
             }
         };
 
         Http.mPicasso
-                .load("http://d12t435tmqq7vw.cloudfront.net/wp-content/uploads/2017/04/biNu-logo-colour-112x56px.png")
+                .load(mImageUrl)
                 .noPlaceholder()
                 .into(mMainImage);
     }
